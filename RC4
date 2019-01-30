@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+void main(){
+int s[255],p[255],n[255],T[255],t[255],k[255],a,i,b,m,j,temp,q,u;
+printf("Enter no.of elements in state ");
+scanf("%d",&a);
+printf("Enter the %d elements in plaintext :\n",a);
+for(i=0;i<a;i++){
+  scanf("%d",&p[i]);
+}
+printf("Enter no.of elements in key ");
+scanf("%d",&b);
+printf("Enter %d Elemts of the key\n",b);
+for(i=0;i<b;i++)
+scanf("%d",&k[i]);
+printf("Enter elements of state\n");
+
+for(i=0;i<a;i++)
+{
+  s[i]=i+1;
+  m=i % b;
+  T[i]=k[m];
+}
+printf("Initial State\n");
+for(i=0;i<a;i++)
+{
+printf("%d\t",s[i]);
+
+}
+printf("\nTemporary vector\n");
+for(i=0;i<a;i++)
+{
+printf("%d\t",T[i]);
+}
+printf("\n");
+j=0;
+for(i=0;i<a;i++)
+{
+  j=(j + s[i]+T[i]) % a;
+  temp=s[i];
+  s[i]=s[j];
+  s[j]=temp;
+}
+
+printf("\n\nEncryption\n");
+i=j=0;
+for(q=0;q<a;q++)
+{
+  i=(i+1)%a;
+  j=(j+s[i])% a;
+  temp=s[i];
+  s[i]=s[j];
+  s[j]=temp;
+  u=(s[i]+s[j])% a;
+  n[q]=p[q] ^ s[u];
+}
+printf("Updated S after Encryption\n");
+for(i=0;i<a;i++)
+printf("%d\t",s[i]);
+printf("\nCipher Text\n");
+for(i=0;i<a;i++)
+printf("%d\t",n[i]);
+
+for(i=0;i<a;i++)
+{
+  s[i]=i+1;
+  m=i % b;
+  T[i]=k[m];
+}
+
+
+printf("\n\nDecryption\n");
+
+
+j=0;
+for(i=0;i<a;i++)
+{
+  j=(j + s[i]+T[i]) % a;
+  temp=s[i];
+  s[i]=s[j];
+  s[j]=temp;
+}
+
+
+i=j=0;
+for(q=0;q<a;q++)
+{
+  i=(i+1)%a;
+  j=(j+s[i])% a;
+  temp=s[i];
+  s[i]=s[j];
+  s[j]=temp;
+  u=(s[i]+s[j])% a;
+  p[q]=n[q] ^ s[u];
+}
+printf("Updated S after Decryption\n");
+for(i=0;i<a;i++)
+printf("%d\t",s[i]);
+printf("\nOriginal Text\n");
+for(i=0;i<a;i++)
+printf("%d\t",p[i]);
+}
