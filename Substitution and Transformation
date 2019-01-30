@@ -1,0 +1,129 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main(){
+  
+  int i, j, r, c, m, choice;
+  int key1[20], key2[20];
+  char str[30];
+  printf("Enter the number of columns:\n");
+  scanf("%d", &c);
+  printf("Enter the text:\n");
+  scanf("%s", str);
+  
+  int len = strlen(str);
+  
+  r = len/c;
+  if(len % c != 0){
+    r++;
+  }
+  
+  char ct[20][20], pt[20][20], result1[20][20], result2[20][20], ct2[20][20];
+  m = 0;
+  for(i = 0; i < r; i++){
+    for(j = 0; j < c; j++){
+      pt[i][j] = str[m];
+      m++;
+    }
+  }
+  for(i = 0; i < r; i++){
+    for(j = 0; j < c; j++){
+      printf("%c ", pt[i][j]); 
+    }
+    printf("\n");
+  }
+printf("Encryption\n");
+            //Row-----------
+            printf("Enter the %d bit key for row transformation starting from 0\n", r);
+            for(i = 0; i < r; i++){
+              scanf("%d", &key1[i]);
+            }
+            int n = 0;
+            m = key1[n];
+              for(i = 0; i < r; i++){
+                for(j = 0; j < c; j++){
+                  ct[i][j] = pt[m][j];
+                  
+                }
+                n++;
+                  m = key1[n];
+              }
+            
+            for(i = 0; i < r; i++){
+              for(j = 0; j < c; j++){
+                  printf("%c ", ct[i][j]); 
+              }
+              printf("\n");
+             }
+             //column----------
+             
+            printf("Enter the %d bit key for column transformation starting from 0\n", c);
+            for(i = 0; i < c; i++){
+              scanf("%d", &key2[i]);
+            }
+            n = 0;
+            m = key2[n];
+              for(i = 0; i < c; i++){
+                for(j = 0; j < r; j++){
+                  ct2[j][i] = ct[j][m];
+                  
+                }
+                n++;
+                  m = key2[n];
+              }
+            
+            for(i = 0; i < r; i++){
+              for(j = 0; j < c; j++){
+                  printf("%c ", ct2[i][j]); 
+              }
+              printf("\n");
+             }
+
+printf("Decryption\n");
+             //decryption
+             //Row-----------
+            
+            n = 0;
+            m = key1[n];
+           
+              for(i = 0; i < r; i++){
+                for(j = 0; j < c; j++){
+                  result1[i][j] = ct2[m][j];
+                  
+                }
+                  n++;
+                  m = key1[n];
+              }
+            printf("After row:\n");
+            
+            for(i = 0; i < r; i++){
+              for(j = 0; j < c; j++){
+                  printf("%c ", result1[i][j]); 
+              }
+              printf("\n");
+             }
+             
+            n = 0;
+            m = key2[n];
+            
+              for(i = 0; i < c; i++){
+                for(j = 0; j < r; j++){
+                  result2[j][i] = result1[j][m];
+                  
+                }
+                n++;
+                  m = key2[n];
+              }
+            printf("After column:\n");
+
+            for(i = 0; i < r; i++){
+              for(j = 0; j < c; j++){
+                  printf("%c ", result2[i][j]); 
+              }
+              printf("\n");
+             }
+
+            
+  return 0;
+}
